@@ -42,7 +42,7 @@ By the conclusion of the script, your directory should house one or more of thes
 Contributions are welcome! Please submit pull requests or open issues to propose changes or report bugs.
 
 ## Acknowledgements
-All rights reserved to appropriate parties, including but not limited to OpenAI, the developers behind [stable](https://github.com/jianfch/stable-ts) and [fast](https://github.com/SYSTRAN/faster-whisper) Whisper ,
+All rights reserved to appropriate parties, including but not limited to OpenAI, the developers behind [stable](https://github.com/jianfch/stable-ts) and [fast](https://github.com/SYSTRAN/faster-whisper) Whisper, and the parties behind the included libraries.
 
 ## License
 [MIT License](https://choosealicense.com/licenses/mit/)
