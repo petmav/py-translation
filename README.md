@@ -8,7 +8,7 @@ The py-translation project is designed to facilitate language transcription thro
 
 Prior to downloading the repository, you require:
 
-- An installation of Python 3.8 or higher
+- An installation of Python 3.10 or higher
 - [CUDA Toolkit 11](https://developer.nvidia.com/cuda-toolkit-archive) - Tested with [CUDA Toolkit 11.8.0](https://developer.nvidia.com/cuda-11-8-0-download-archive)
 - [cuBLAS for CUDA 11](https://developer.nvidia.com/cublas) - Installed through the CUDA Toolkit
 - [cuDNN 8 for CUDA 11](https://developer.nvidia.com/rdp/cudnn-archive) - Tested with [cuDNN v8.9.5 for CUDA 11.x](https://developer.nvidia.com/rdp/cudnn-archive#a-collapse895-118)
