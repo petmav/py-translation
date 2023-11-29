@@ -34,6 +34,8 @@ By the conclusion of the script, your directory should house one or more of thes
 - `final_text.txt` (like final_text_output, however unique lines only (cleanest file))
 - `translated.txt` (translated version of final_text, only available after translation is done)
 
+Keys for API-enabled services (currently Microsoft Translator and ChatGPT) must be input into the `keys.txt` file present in the `inputs` directory.
+
 ## Supported Languages for Translation
 
 `languages.txt` contains a list of supported languages for translation of the provided file, including but not limited to English, Spanish, French, and many others.
