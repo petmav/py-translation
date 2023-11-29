@@ -22,6 +22,8 @@ pip install -r requirements.txt
 
 Run `main.py` to start the application. The script supports multiple languages for translation however only accepts English as an input for most of its' inputs. You must also have a `.wav`, `.mp3` or `.flac` file present prior to running the script (for transcription).
 
+Keys for API-enabled services (currently Microsoft Translator and ChatGPT) must be input into the `keys.txt` file present in the `inputs` directory following the `=` sign.
+
 The program can be started through the terminal command:
 ```
 python3 main.py
@@ -33,8 +35,6 @@ By the conclusion of the script, your directory should house one or more of thes
 - `final_text_output.txt` (raw text post-filtering)
 - `final_text.txt` (like final_text_output, however unique lines only (cleanest file))
 - `translated.txt` (translated version of final_text, only available after translation is done)
-
-Keys for API-enabled services (currently Microsoft Translator and ChatGPT) must be input into the `keys.txt` file present in the `inputs` directory.
 
 ## Supported Languages for Translation
 
