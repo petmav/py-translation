@@ -20,9 +20,9 @@ pip install -r requirements.txt
 
 ## Usage
 
-Run `main.py` to start the application. The script supports multiple languages for translation however only accepts English as an input for most of its' inputs. You must also have a `.wav`, `.mp3` or `.flac` file present prior to running the script (for transcription).
+Run `main.py` to start the application. The script supports multiple languages for translation however only accepts English as an input for most of its' inputs. You must also have a `.wav`, `.mp3` or `.flac` file present in the `inputs` directory prior to running the script (for transcription).
 
-Keys for API-enabled services (currently Microsoft Translator and ChatGPT) must be input into the `keys.txt` file present in the `inputs` directory following the `=` sign.
+Keys for API-enabled services (currently Microsoft Translator and ChatGPT) must be input into the `keys.txt` file present in the `settings` directory following the `=` sign.
 
 The program can be started through the terminal command:
 ```
