@@ -15,7 +15,8 @@ Prior to downloading the repository, you require:
 
 After downloading/cloning the repository, run the setup.bat file in the directory. Alternatively, run this in the command-line/terminal to install the requirements for the program:
 ```
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
+python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 ```
 
 ## Usage
