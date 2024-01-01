@@ -79,7 +79,8 @@ while True:
                 if language in languages_accepted:
                     print(f'Running Whisper with parameters: {model_selection}, {file_path}, {language}')
                     model = stable_whisper.load_faster_whisper(f'{model_selection}')
-                    result = model.transcribe_stable(file_path, language=language)
+                    args = funct.extract_transcribe_args()
+                    result = model.transcribe_stable(args, audio=file_path, language=language)
                     x = False
 
             result.to_srt_vtt('output.srt')
