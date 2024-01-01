@@ -12,7 +12,7 @@ Prior to downloading the repository, you require:
 - [CUDA Toolkit 11](https://developer.nvidia.com/cuda-toolkit-archive) - Tested with [CUDA Toolkit 11.8.0](https://developer.nvidia.com/cuda-11-8-0-download-archive)
 - [cuBLAS for CUDA 11](https://developer.nvidia.com/cublas) - Installed through the CUDA Toolkit
 - [cuDNN 8 for CUDA 11](https://developer.nvidia.com/rdp/cudnn-archive) - Tested with [cuDNN v8.9.5 for CUDA 11.x](https://developer.nvidia.com/rdp/cudnn-archive#a-collapse895-118)
-- An ffmpeg installation with the PATH environment variable assigned (This can be done through [Chocolatey](https://chocolatey.org/install) with the command `choco install ffmpeg` or manually through the [official FFmpeg site](https://ffmpeg.org/download.html)).
+- An ffmpeg installation with the PATH environment variable assigned (This can be done through [Chocolatey](https://chocolatey.org/install) with the command `choco install ffmpeg` or manually through the [official FFmpeg site](https://ffmpeg.org/download.html))
 
 After downloading/cloning the repository, run the setup.bat file in the directory. Alternatively, run this in the command-line/terminal to install the requirements for the program:
 ```
