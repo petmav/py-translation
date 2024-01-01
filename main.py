@@ -7,7 +7,7 @@ import deep_translator
 
 chatgpt_api = funct.extract_chatgpt()
 microsoft_api = funct.extract_microsoft()
-print(f'Your Microsoft Translator API key is: {microsoft_api}')
+print(f'\nYour Microsoft Translator API key is: {microsoft_api}')
 print(f'Your ChatGPT API key is: {chatgpt_api}')
 
 languages_accepted = ("af am ar as az ba be bg bn bo br bs ca cs cy da de el en es et eu fa fi fo fr gl gu ha haw he "
@@ -17,10 +17,10 @@ languages_accepted = ("af am ar as az ba be bg bn bo br bs ca cs cy da de el en 
 
 while True:
 
-    model_selection = input(f'Welcome to the py-translation tool!\n'
+    model_selection = input(f'\nWelcome to the py-translation tool!\n'
                             f'Type [help] to see instructions on how to use the program.\n'
                             f'Type [tiny/base/small/medium/large] to choose a model.\n'
-                            f'You can type [exit] to cancel the program.\n').lower()
+                            f'You can type [exit] to cancel the program.\n\n').lower()
 
     match model_selection:
         case "exit":
@@ -29,11 +29,11 @@ while True:
 
         case "help":
 
-            print('This program is utilised to transcribe and translate a video through the use of the OpenAI Whisper '
+            print('\nThis program is utilised to transcribe and translate a video through the use of the OpenAI Whisper '
                   'model.\n'
                   'To use this model, type [tiny/base/small/medium/large] to choose a model and initiate the process.\n'
                   'After this, you will need the file (mp3/flac/wav extensions accepted) and the language being '
-                  'translated.\n')
+                  'translated.')
 
             time.sleep(3)
 
@@ -79,8 +79,7 @@ while True:
                 if language in languages_accepted:
                     print(f'Running Whisper with parameters: {model_selection}, {file_path}, {language}')
                     model = stable_whisper.load_faster_whisper(f'{model_selection}')
-                    args = funct.extract_transcribe_args()
-                    result = model.transcribe_stable(args, audio=file_path, language=language)
+                    result = model.transcribe_stable(audio=file_path, language=language)
                     x = False
 
             result.to_srt_vtt('output.srt')
