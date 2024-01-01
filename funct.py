@@ -104,7 +104,7 @@ def extract_transcribe_args():
     arguments = {}
 
     with open('settings/transcribe.txt', 'r', encoding='utf-8') as f:
-        for line in file:
+        for line in f:
             key, value = line.strip().split('=', 1)
             if not key and value:
                 continue
