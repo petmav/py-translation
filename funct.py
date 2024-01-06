@@ -1,5 +1,5 @@
 import re
-
+import ast
 
 def srt_to_txt(srt_file_path, txt_file_path):
     with open(srt_file_path, 'r', encoding='utf-8') as srt:
@@ -71,44 +71,174 @@ def code_to_language(code):
 
 
 def extract_microsoft():
+
     try:
+
         with open('settings/keys.txt', 'r', encoding='utf-8') as f:
             lines = f.readlines()
+
             for line in lines:
+
                 index = line.find('MICROSOFT=')
                 if index != -1:
+
                     _, string = line.split('=', maxsplit=1)
+
                     return string.strip()
+
             raise Exception("No 'MICROSOFT' key found in the file.")
+
     except FileNotFoundError:
+
         print("The file 'keys.txt' does not exist.")
         return
 
 
 def extract_chatgpt():
+
     try:
+
         with open('settings/keys.txt', 'r', encoding='utf-8') as f:
             lines = f.readlines()
+
             for line in lines:
+
                 index = line.find('CHATGPT=')
                 if index != -1:
+
                     _, string = line.split('=', maxsplit=1)
+
                     return string.strip()
+
             raise Exception("No 'CHATGPT' key found in the file.")
+
     except FileNotFoundError:
+
         print("The file 'keys.txt' does not exist.")
         return
 
-def extract_transcribe_args():
+def argument_identifier(args: list) -> list:
 
-    arguments = {}
+    final = []
+    count = 0
+
+    for arg in args:
+
+        temp = arg.split('=', maxsplit=1)
+
+        if count == 1:
+
+            try:
+
+                if type(ast.literal_eval(temp[1])) in [int, str, list, dict]:
+                    raise Exception
+
+                final.append(ast.literal_eval(temp[1]))
+                print(f'Tuple/float for {temp[0]} found.')
+
+            except Exception as e:
+
+                final.append((0.0, 0.2, 0.4, 0.6, 0.8, 1.0))
+                print(f'Tuple/float for {temp[0]} not found. Applied default.')
+
+            count += 1
+            continue
+
+        if count == 19:
+
+            try:
+
+                if temp[1].lower() == 'none':
+
+                    final.append(None)
+                    count += 1
+                    print(f'Dictionary for {temp[0]} not found. Applied default.')
+                    continue
+
+                final.append(ast.literal_eval(temp[1]))
+                print(f'Dictionary for {temp[0]} found.')
+
+            except Exception as e:
+
+                final.append(None)
+                print(f'Dictionary for {temp[0]} not found. Applied default.')
+
+            count += 1
+            continue
+
+        try:
+            converted_value = float(temp[1])
+            if converted_value.is_integer():
+                final.append(int(converted_value))
+            else:
+                final.append(converted_value)
+        except ValueError:
+            if temp[1].lower() in ['true', 'false', 'none']:
+                if temp[1].lower() == 'true':
+                    final.append(True)
+                elif temp[1].lower() == 'false':
+                    final.append(False)
+                elif temp[1].lower() == 'none':
+                    final.append(None)
+            else:
+                final.append(str(temp[1]))
+
+        count += 1
+
+    return final
+
+
+def extract_and_filter_args() -> list:
+
+    arguments_filtered = ['verbose=', 'temperature=', 'compression_ratio_threshold=', 'logprob_threshold=', 'no_speech_threshold=', 'condition_on_previous_text=', 'initial_prompt=', 'word_timestamps=', 'regroup=', 'ts_num=', 'ts_noise=', 'suppress_silence=', 'suppress_word_ts=', 'use_word_position=', 'q_levels=', 'k_size=', 'time_scale=', 'demucs=', 'demucs_output=', 'demucs_options=', 'vad=', 'vad_threshold=', 'vad_onnx=', 'min_word_dur=', 'nonspeech_error=', 'only_voice_freq=', 'prepend_punctuations=', 'append_punctuations=', 'mel_first=', 'split_callback=', 'suppress_ts_tokens=', 'gap_padding=', 'only_ffmpeg=', 'max_instant_words=', 'avg_prob_threshold=', 'progress_callback=', 'ignore_compatibility=']
+    count = 0
 
     with open('settings/transcribe.txt', 'r', encoding='utf-8') as f:
-        for line in f:
-            key, value = line.strip().split('=', 1)
-            if not key and value:
-                continue
-            else:
-                arguments[key] = value
 
-    return arguments
+        for line in f:
+
+            temp = line.split('=', maxsplit=1)
+
+            if len(temp[1]) < 1:
+
+                continue
+
+            arguments_filtered[count] = arguments_filtered[count] + temp[1].strip()
+            count += 1
+
+        f.close()
+
+    return argument_identifier(arguments_filtered)
+
+def finalize_arguments():
+
+    with open('data/final_transcribe.txt', 'r', encoding='utf-8') as f:
+
+        count = 0
+        arguments_filtered = ['verbose=', 'temperature=', 'compression_ratio_threshold=', 'logprob_threshold=', 'no_speech_threshold=', 'condition_on_previous_text=', 'initial_prompt=', 'word_timestamps=', 'regroup=', 'ts_num=', 'ts_noise=', 'suppress_silence=', 'suppress_word_ts=', 'use_word_position=', 'q_levels=', 'k_size=', 'time_scale=', 'demucs=', 'demucs_output=', 'demucs_options=', 'vad=', 'vad_threshold=', 'vad_onnx=', 'min_word_dur=', 'nonspeech_error=', 'only_voice_freq=', 'prepend_punctuations=', 'append_punctuations=', 'mel_first=', 'split_callback=', 'suppress_ts_tokens=', 'gap_padding=', 'only_ffmpeg=', 'max_instant_words=', 'avg_prob_threshold=', 'progress_callback=', 'ignore_compatibility=']
+
+        for line in f:
+
+            temp = line.split('=', maxsplit=1)
+
+            if len(temp[1]) < 1:
+
+                continue
+
+            arguments_filtered[count] = arguments_filtered[count] + temp[1].strip()
+            count += 1
+
+        f.close()
+
+        x = argument_identifier(arguments_filtered)
+        y = extract_and_filter_args()
+        print(x)
+        print(y)
+
+        z = [y[i] if y[i] not in ['', None] else x[i] for i in range(len(x))]
+
+        return z
+
+
+if __name__ == '__main__':
+    print('lol')
