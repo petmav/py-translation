@@ -66,20 +66,101 @@ while True:
                 language = input('File found. Insert language code (can be found in languages.txt): ')
 
                 if language == '':
+
                     print('Language has defaulted to auto-recognition.')
                     print(f'Running Whisper with parameters: {model_selection}, {file_path}, auto')
+                    arguments = funct.finalize_arguments()
                     model = stable_whisper.load_faster_whisper(f'{model_selection}')
-                    result = model.transcribe_stable(file_path)
+                    result = model.transcribe_stable(    verbose=arguments[0],
+                                                         temperature=arguments[1],
+                                                         compression_ratio_threshold=arguments[2],
+                                                         logprob_threshold=arguments[3],
+                                                         no_speech_threshold=arguments[4],
+                                                         condition_on_previous_text=arguments[5],
+                                                         initial_prompt=arguments[6],
+                                                         word_timestamps=arguments[7],
+                                                         regroup=arguments[8],
+                                                         ts_num=arguments[9],
+                                                         ts_noise=arguments[10],
+                                                         suppress_silence=arguments[11],
+                                                         suppress_word_ts=arguments[12],
+                                                         use_word_position=arguments[13],
+                                                         q_levels=arguments[14],
+                                                         k_size=arguments[15],
+                                                         time_scale=arguments[16],
+                                                         demucs=arguments[17],
+                                                         demucs_output=arguments[18],
+                                                         demucs_options=arguments[19],
+                                                         vad=arguments[20],
+                                                         vad_threshold=arguments[21],
+                                                         vad_onnx=arguments[22],
+                                                         min_word_dur=arguments[23],
+                                                         nonspeech_error=arguments[24],
+                                                         only_voice_freq=arguments[25],
+                                                         prepend_punctuations=arguments[26],
+                                                         append_punctuations=arguments[27],
+                                                         mel_first=arguments[28],
+                                                         split_callback=arguments[29],
+                                                         suppress_ts_tokens=arguments[30],
+                                                         gap_padding=arguments[31],
+                                                         only_ffmpeg=arguments[32],
+                                                         max_instant_words=arguments[33],
+                                                         avg_prob_threshold=arguments[34],
+                                                         progress_callback=arguments[35],
+                                                         ignore_compatibility=arguments[36],
+                                                         audio=file_path)
                     x = False
 
                 if language not in languages_accepted:
+
                     print('Language not valid. Please try again.')
                     continue
 
                 if language in languages_accepted:
+
                     print(f'Running Whisper with parameters: {model_selection}, {file_path}, {language}')
                     model = stable_whisper.load_faster_whisper(f'{model_selection}')
-                    result = model.transcribe_stable(audio=file_path, language=language)
+                    arguments = funct.finalize_arguments()
+                    result = model.transcribe_stable(   verbose=arguments[0],
+                                                        temperature=arguments[1],
+                                                        compression_ratio_threshold=arguments[2],
+                                                        logprob_threshold=arguments[3],
+                                                        no_speech_threshold=arguments[4],
+                                                        condition_on_previous_text=arguments[5],
+                                                        initial_prompt=arguments[6],
+                                                        word_timestamps=arguments[7],
+                                                        regroup=arguments[8],
+                                                        ts_num=arguments[9],
+                                                        ts_noise=arguments[10],
+                                                        suppress_silence=arguments[11],
+                                                        suppress_word_ts=arguments[12],
+                                                        use_word_position=arguments[13],
+                                                        q_levels=arguments[14],
+                                                        k_size=arguments[15],
+                                                        time_scale=arguments[16],
+                                                        demucs=arguments[17],
+                                                        demucs_output=arguments[18],
+                                                        demucs_options=arguments[19],
+                                                        vad=arguments[20],
+                                                        vad_threshold=arguments[21],
+                                                        vad_onnx=arguments[22],
+                                                        min_word_dur=arguments[23],
+                                                        nonspeech_error=arguments[24],
+                                                        only_voice_freq=arguments[25],
+                                                        prepend_punctuations=arguments[26],
+                                                        append_punctuations=arguments[27],
+                                                        mel_first=arguments[28],
+                                                        split_callback=arguments[29],
+                                                        suppress_ts_tokens=arguments[30],
+                                                        gap_padding=arguments[31],
+                                                        only_ffmpeg=arguments[32],
+                                                        max_instant_words=arguments[33],
+                                                        avg_prob_threshold=arguments[34],
+                                                        progress_callback=arguments[35],
+                                                        ignore_compatibility=arguments[36],
+                                                        audio=file_path,
+                                                        language=language)
+
                     x = False
 
             result.to_srt_vtt('output.srt')
@@ -106,8 +187,11 @@ while True:
                     if translation_method == 'google':
 
                         with open('final_text.txt', 'r', encoding='utf-8') as f:
+
                             i = 1
+
                             for line in f:
+
                                 u = deep_translator.GoogleTranslator(source='auto', target='en').translate(line)
                                 print(i)
                                 translated += f'{u}\n'
@@ -121,8 +205,11 @@ while True:
                     if translation_method == 'gpt' and not chatgpt_api == '':
 
                         with open('final_text.txt', 'r', encoding='utf-8') as f:
+
                             i = 1
+
                             for line in f:
+
                                 u = deep_translator.ChatGptTranslator(api_key=chatgpt_api, target='english').translate(
                                     line)
                                 print(i)
@@ -130,6 +217,7 @@ while True:
                                 i += 1
 
                         with open('translated.txt', 'w', encoding='utf-8') as f:
+
                             f.write(translated)
 
                         break
@@ -137,8 +225,11 @@ while True:
                     if translation_method == 'microsoft' and not microsoft_api == '':
 
                         with open('final_text.txt', 'r', encoding='utf-8') as f:
+
                             i = 1
+
                             for line in f:
+
                                 u = deep_translator.MicrosoftTranslator(api_key=microsoft_api, target='en').translate(
                                     line)
                                 print(i)
@@ -146,6 +237,7 @@ while True:
                                 i += 1
 
                         with open('translated.txt', 'w', encoding='utf-8') as f:
+
                             f.write(translated)
 
                         break
