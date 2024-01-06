@@ -1,4 +1,7 @@
-@echo off
+@echo off                     
+
+echo WARNING: THIS WILL NOT RUN PROPERLY WITHOUT THE PRE-INSTALLATION REQUIREMENTS LISTED IN THE README.md
+timeout /t 1
 
 python -m pip install -r requirements.txt
 python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
