@@ -71,44 +71,26 @@ while True:
                     print(f'Running Whisper with parameters: {model_selection}, {file_path}, auto')
                     arguments = funct.finalize_arguments()
                     model = stable_whisper.load_faster_whisper(f'{model_selection}')
-                    result = model.transcribe_stable(    verbose=arguments[0],
-                                                         temperature=arguments[1],
-                                                         compression_ratio_threshold=arguments[2],
-                                                         logprob_threshold=arguments[3],
-                                                         no_speech_threshold=arguments[4],
-                                                         condition_on_previous_text=arguments[5],
-                                                         initial_prompt=arguments[6],
-                                                         word_timestamps=arguments[7],
-                                                         regroup=arguments[8],
-                                                         ts_num=arguments[9],
-                                                         ts_noise=arguments[10],
-                                                         suppress_silence=arguments[11],
-                                                         suppress_word_ts=arguments[12],
-                                                         use_word_position=arguments[13],
-                                                         q_levels=arguments[14],
-                                                         k_size=arguments[15],
-                                                         time_scale=arguments[16],
-                                                         demucs=arguments[17],
-                                                         demucs_output=arguments[18],
-                                                         demucs_options=arguments[19],
-                                                         vad=arguments[20],
-                                                         vad_threshold=arguments[21],
-                                                         vad_onnx=arguments[22],
-                                                         min_word_dur=arguments[23],
-                                                         nonspeech_error=arguments[24],
-                                                         only_voice_freq=arguments[25],
-                                                         prepend_punctuations=arguments[26],
-                                                         append_punctuations=arguments[27],
-                                                         mel_first=arguments[28],
-                                                         split_callback=arguments[29],
-                                                         suppress_ts_tokens=arguments[30],
-                                                         gap_padding=arguments[31],
-                                                         only_ffmpeg=arguments[32],
-                                                         max_instant_words=arguments[33],
-                                                         avg_prob_threshold=arguments[34],
-                                                         progress_callback=arguments[35],
-                                                         ignore_compatibility=arguments[36],
-                                                         audio=file_path)
+                    result = model.transcribe_stable(beam_size=int(arguments[0]), best_of=int(arguments[1]),
+                                                     patience=float(arguments[2]),
+                                                     length_penalty=float(arguments[3]),
+                                                     repetition_penalty=float(arguments[4]),
+                                                     no_repeat_ngram_size=int(arguments[5]), temperature=arguments[6],
+                                                     compression_ratio_threshold=float(arguments[7]),
+                                                     log_prob_threshold=float(arguments[8]),
+                                                     no_speech_threshold=float(arguments[9]),
+                                                     condition_on_previous_text=bool(arguments[10]),
+                                                     prompt_reset_on_temperature=float(arguments[11]),
+                                                     initial_prompt=arguments[12], prefix=str(arguments[13]),
+                                                     suppress_blank=bool(arguments[14]),
+                                                     suppress_tokens=list(arguments[15]),
+                                                     without_timestamps=bool(arguments[16]),
+                                                     max_initial_timestamp=float(arguments[17]),
+                                                     word_timestamps=bool(arguments[18]),
+                                                     prepend_punctuations=str(arguments[19]),
+                                                     append_punctuations=str(arguments[20]),
+                                                     vad_filter=bool(arguments[21]),
+                                                     vad_parameters=arguments[22], audio=file_path, language=language)
                     x = False
 
                 if language not in languages_accepted:
@@ -121,45 +103,20 @@ while True:
                     print(f'Running Whisper with parameters: {model_selection}, {file_path}, {language}')
                     model = stable_whisper.load_faster_whisper(f'{model_selection}')
                     arguments = funct.finalize_arguments()
-                    result = model.transcribe_stable(   verbose=arguments[0],
-                                                        temperature=arguments[1],
-                                                        compression_ratio_threshold=arguments[2],
-                                                        logprob_threshold=arguments[3],
-                                                        no_speech_threshold=arguments[4],
-                                                        condition_on_previous_text=arguments[5],
-                                                        initial_prompt=arguments[6],
-                                                        word_timestamps=arguments[7],
-                                                        regroup=arguments[8],
-                                                        ts_num=arguments[9],
-                                                        ts_noise=arguments[10],
-                                                        suppress_silence=arguments[11],
-                                                        suppress_word_ts=arguments[12],
-                                                        use_word_position=arguments[13],
-                                                        q_levels=arguments[14],
-                                                        k_size=arguments[15],
-                                                        time_scale=arguments[16],
-                                                        demucs=arguments[17],
-                                                        demucs_output=arguments[18],
-                                                        demucs_options=arguments[19],
-                                                        vad=arguments[20],
-                                                        vad_threshold=arguments[21],
-                                                        vad_onnx=arguments[22],
-                                                        min_word_dur=arguments[23],
-                                                        nonspeech_error=arguments[24],
-                                                        only_voice_freq=arguments[25],
-                                                        prepend_punctuations=arguments[26],
-                                                        append_punctuations=arguments[27],
-                                                        mel_first=arguments[28],
-                                                        split_callback=arguments[29],
-                                                        suppress_ts_tokens=arguments[30],
-                                                        gap_padding=arguments[31],
-                                                        only_ffmpeg=arguments[32],
-                                                        max_instant_words=arguments[33],
-                                                        avg_prob_threshold=arguments[34],
-                                                        progress_callback=arguments[35],
-                                                        ignore_compatibility=arguments[36],
-                                                        audio=file_path,
-                                                        language=language)
+                    result = model.transcribe_stable(beam_size=int(arguments[0]), best_of=int(arguments[1]), patience=float(arguments[2]),
+                                                     length_penalty=float(arguments[3]), repetition_penalty=float(arguments[4]),
+                                                     no_repeat_ngram_size=int(arguments[5]), temperature=arguments[6],
+                                                     compression_ratio_threshold=float(arguments[7]),
+                                                     log_prob_threshold=float(arguments[8]), no_speech_threshold=float(arguments[9]),
+                                                     condition_on_previous_text=bool(arguments[10]),
+                                                     prompt_reset_on_temperature=float(arguments[11]),
+                                                     initial_prompt=arguments[12], prefix=str(arguments[13]),
+                                                     suppress_blank=bool(arguments[14]), suppress_tokens=list(arguments[15]),
+                                                     without_timestamps=bool(arguments[16]),
+                                                     max_initial_timestamp=float(arguments[17]), word_timestamps=bool(arguments[18]),
+                                                     prepend_punctuations=str(arguments[19]),
+                                                     append_punctuations=str(arguments[20]), vad_filter=bool(arguments[21]),
+                                                     vad_parameters=arguments[22], audio=file_path, language=language)
 
                     x = False
 
@@ -175,7 +132,7 @@ while True:
 
             translate_ask = input('Do you want to translate to English (TRANSLATION LONG AND ALMOST UNUSABLE)? (y/n): ')
 
-            if translate_ask == 'y':
+            if translate_ask.lower() == 'y':
 
                 while True:
 

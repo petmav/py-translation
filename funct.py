@@ -126,25 +126,39 @@ def argument_identifier(args: list) -> list:
 
         temp = arg.split('=', maxsplit=1)
 
-        if count == 1:
+        if count == 6:
 
             try:
 
-                if type(ast.literal_eval(temp[1])) in [int, str, list, dict]:
+                if type(ast.literal_eval(temp[1])) in [int, str, dict]:
                     raise Exception
 
                 final.append(ast.literal_eval(temp[1]))
-                print(f'Tuple/float for {temp[0]} found.')
 
             except Exception as e:
 
-                final.append((0.0, 0.2, 0.4, 0.6, 0.8, 1.0))
-                print(f'Tuple/float for {temp[0]} not found. Applied default.')
+                final.append([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
 
             count += 1
             continue
 
-        if count == 19:
+        if count == 15:
+
+            try:
+
+                if type(ast.literal_eval(temp[1])) in [int, str, dict]:
+                    raise Exception
+
+                final.append(ast.literal_eval(temp[1]))
+
+            except Exception as e:
+
+                final.append([-1])
+
+            count += 1
+            continue
+
+        if count == 22:
 
             try:
 
@@ -152,16 +166,13 @@ def argument_identifier(args: list) -> list:
 
                     final.append(None)
                     count += 1
-                    print(f'Dictionary for {temp[0]} not found. Applied default.')
                     continue
 
                 final.append(ast.literal_eval(temp[1]))
-                print(f'Dictionary for {temp[0]} found.')
 
             except Exception as e:
 
                 final.append(None)
-                print(f'Dictionary for {temp[0]} not found. Applied default.')
 
             count += 1
             continue
@@ -190,7 +201,12 @@ def argument_identifier(args: list) -> list:
 
 def extract_and_filter_args() -> list:
 
-    arguments_filtered = ['verbose=', 'temperature=', 'compression_ratio_threshold=', 'logprob_threshold=', 'no_speech_threshold=', 'condition_on_previous_text=', 'initial_prompt=', 'word_timestamps=', 'regroup=', 'ts_num=', 'ts_noise=', 'suppress_silence=', 'suppress_word_ts=', 'use_word_position=', 'q_levels=', 'k_size=', 'time_scale=', 'demucs=', 'demucs_output=', 'demucs_options=', 'vad=', 'vad_threshold=', 'vad_onnx=', 'min_word_dur=', 'nonspeech_error=', 'only_voice_freq=', 'prepend_punctuations=', 'append_punctuations=', 'mel_first=', 'split_callback=', 'suppress_ts_tokens=', 'gap_padding=', 'only_ffmpeg=', 'max_instant_words=', 'avg_prob_threshold=', 'progress_callback=', 'ignore_compatibility=']
+    arguments_filtered = ["beam_size=","best_of=","patience=","length_penalty=","repetition_penalty=",
+                          "no_repeat_ngram_size=","temperature=","compression_ratio_threshold=","log_prob_threshold=",
+                          "no_speech_threshold=","condition_on_previous_text=","prompt_reset_on_temperature=",
+                          "initial_prompt=","prefix=","suppress_blank=","suppress_tokens=","without_timestamps=",
+                          "max_initial_timestamp=","word_timestamps=","prepend_punctuations=","append_punctuations=",
+                          "vad_filter=","vad_parameters="]
     count = 0
 
     with open('settings/transcribe.txt', 'r', encoding='utf-8') as f:
@@ -215,7 +231,15 @@ def finalize_arguments():
     with open('data/final_transcribe.txt', 'r', encoding='utf-8') as f:
 
         count = 0
-        arguments_filtered = ['verbose=', 'temperature=', 'compression_ratio_threshold=', 'logprob_threshold=', 'no_speech_threshold=', 'condition_on_previous_text=', 'initial_prompt=', 'word_timestamps=', 'regroup=', 'ts_num=', 'ts_noise=', 'suppress_silence=', 'suppress_word_ts=', 'use_word_position=', 'q_levels=', 'k_size=', 'time_scale=', 'demucs=', 'demucs_output=', 'demucs_options=', 'vad=', 'vad_threshold=', 'vad_onnx=', 'min_word_dur=', 'nonspeech_error=', 'only_voice_freq=', 'prepend_punctuations=', 'append_punctuations=', 'mel_first=', 'split_callback=', 'suppress_ts_tokens=', 'gap_padding=', 'only_ffmpeg=', 'max_instant_words=', 'avg_prob_threshold=', 'progress_callback=', 'ignore_compatibility=']
+        arguments_filtered = ["beam_size=", "best_of=", "patience=", "length_penalty=", "repetition_penalty=",
+                              "no_repeat_ngram_size=", "temperature=", "compression_ratio_threshold=",
+                              "log_prob_threshold=",
+                              "no_speech_threshold=", "condition_on_previous_text=", "prompt_reset_on_temperature=",
+                              "initial_prompt=", "prefix=", "suppress_blank=", "suppress_tokens=",
+                              "without_timestamps=",
+                              "max_initial_timestamp=", "word_timestamps=", "prepend_punctuations=",
+                              "append_punctuations=",
+                              "vad_filter=", "vad_parameters="]
 
         for line in f:
 
@@ -232,8 +256,6 @@ def finalize_arguments():
 
         x = argument_identifier(arguments_filtered)
         y = extract_and_filter_args()
-        print(x)
-        print(y)
 
         z = [y[i] if y[i] not in ['', None] else x[i] for i in range(len(x))]
 
@@ -241,4 +263,4 @@ def finalize_arguments():
 
 
 if __name__ == '__main__':
-    print('lol')
+    print(finalize_arguments())
