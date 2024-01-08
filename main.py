@@ -7,6 +7,7 @@ import deep_translator
 
 chatgpt_api = funct.extract_chatgpt()
 microsoft_api = funct.extract_microsoft()
+
 print(f'\nYour Microsoft Translator API key is: {microsoft_api}')
 print(f'Your ChatGPT API key is: {chatgpt_api}')
 
@@ -14,6 +15,18 @@ languages_accepted = ("af am ar as az ba be bg bn bo br bs ca cs cy da de el en 
                       "hi hr ht hu hy id is it ja jw ka kk km kn ko la lb ln lo lt lv mg mi mk ml mn mr ms mt my ne "
                       "nl nn no oc pa pl ps pt ro ru sa sd si sk sl sn so sq sr su sv sw ta te tg th tk tl tr tt uk "
                       "ur uz vi yi yo zh yue").split()
+
+proxies = {
+           "http": "85.8.68.2:80",
+           "http": "172.67.190.16:80",
+           "http": "172.67.181.207:80",
+           "http": "45.8.107.229:80",
+           "http": "45.8.107.118:80",
+           "http": "172.67.70.58:80",
+           "http": "45.131.208.16:80",
+           "http": "45.131.7.22:80",
+           "http": "188.114.96.21:80"
+}
 
 while True:
 
@@ -90,7 +103,7 @@ while True:
                                                      prepend_punctuations=str(arguments[19]),
                                                      append_punctuations=str(arguments[20]),
                                                      vad_filter=bool(arguments[21]),
-                                                     vad_parameters=arguments[22], audio=file_path, language=language)
+                                                     vad_parameters=arguments[22], audio=file_path, language='en')
                     x = False
 
                 if language not in languages_accepted:
@@ -143,32 +156,33 @@ while True:
 
                     if translation_method == 'google':
 
+                        i = 1
+
                         with open('final_text.txt', 'r', encoding='utf-8') as f:
 
-                            i = 1
-
                             for line in f:
-
-                                u = deep_translator.GoogleTranslator(source='auto', target='en').translate(line)
+                                u = deep_translator.GoogleTranslator(source=language, target='en', proxies=proxies).translate(
+                                    line)
                                 print(i)
                                 translated += f'{u}\n'
                                 i += 1
 
                         with open('translated.txt', 'w', encoding='utf-8') as f:
+
                             f.write(translated)
 
                         break
 
                     if translation_method == 'gpt' and not chatgpt_api == '':
 
-                        with open('final_text.txt', 'r', encoding='utf-8') as f:
+                        i = 1
 
-                            i = 1
+                        with open('final_text.txt', 'r', encoding='utf-8') as f:
 
                             for line in f:
 
                                 u = deep_translator.ChatGptTranslator(api_key=chatgpt_api, target='english').translate(
-                                    line)
+                                line)
                                 print(i)
                                 translated += f'{u}\n'
                                 i += 1
